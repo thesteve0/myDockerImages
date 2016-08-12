@@ -17,7 +17,10 @@ RUN yum install -y --setopt=tsflags=nodocs httpd.x86_64 && yum clean all -y
 # 2. sends all logs to stdout through log = "|more"
 COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 
-#We will also bind it to a mount point where we can put stuff
+# Copy over an index.html to the default location and then make it a volume
+RUN rm -rf /var/www/html/ && mkdir /var/www/html/ && chmod -R a+rwx /var/www/html/
+COPY content /var/www/html/
+VOLUME ["/var/www/html"]
 
 #Expose the port
 EXPOSE 8080
