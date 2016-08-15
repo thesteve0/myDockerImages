@@ -26,7 +26,9 @@ VOLUME ["/var/www/html"]
 EXPOSE 8080
 
 # need to change some permissions to allow non-root user to start things
-# had to do these steps to give the httpd deamon the ability to
+# had to do these steps to give the httpd deamon the ability to run
+# might be this bug - https://github.com/docker/docker/issues/20240
+# my information here - https://github.com/docker/docker/issues/24660
 RUN rm -rf /run/httpd && mkdir /run/httpd && chmod -R a+rwx /run/httpd
 
 USER 1001
