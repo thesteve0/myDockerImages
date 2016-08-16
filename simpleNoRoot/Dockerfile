@@ -23,7 +23,9 @@ COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 EXPOSE 8080
 
 # need to change some permissions to allow non-root user to start things
-# had to do these steps to give the httpd deamon the ability to
+# had to do these steps to give the httpd deamon the ability to.
+# This actually appears due to a bug with Windows and Mac. It looks like
+# we could have just "ls" on the directory to get the chmod to stick
 RUN rm -rf /run/httpd && mkdir /run/httpd && chmod -R a+rwx /run/httpd
 
 USER 1001

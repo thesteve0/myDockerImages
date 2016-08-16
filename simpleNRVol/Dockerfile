@@ -18,6 +18,8 @@ RUN yum install -y --setopt=tsflags=nodocs httpd.x86_64 && yum clean all -y
 COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 
 # Copy over an index.html to the default location and then make it a volume
+# The permission changes actually appears due to a bug with Windows and Mac. It looks like
+# we could have just "ls" on the directory to get the chmod to stick
 RUN rm -rf /var/www/html/ && mkdir /var/www/html/ && chmod -R a+rwx /var/www/html/
 COPY content /var/www/html/
 VOLUME ["/var/www/html"]
@@ -26,9 +28,9 @@ VOLUME ["/var/www/html"]
 EXPOSE 8080
 
 # need to change some permissions to allow non-root user to start things
-# had to do these steps to give the httpd deamon the ability to run
-# might be this bug - https://github.com/docker/docker/issues/20240
-# my information here - https://github.com/docker/docker/issues/24660
+# had to do these steps to give the httpd deamon the ability to.
+# This actually appears due to a bug with Windows and Mac. It looks like
+# we could have just "ls" on the directory to get the chmod to stick
 RUN rm -rf /run/httpd && mkdir /run/httpd && chmod -R a+rwx /run/httpd
 
 USER 1001
