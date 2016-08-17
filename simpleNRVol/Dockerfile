@@ -20,9 +20,9 @@ COPY conf/httpd.conf /etc/httpd/conf/httpd.conf
 # Copy over an index.html to the default location and then make it a volume
 # The permission changes actually appears due to a bug with Windows and Mac. It looks like
 # we could have just "ls" on the directory to get the chmod to stick
-RUN rm -rf /var/www/html/ && mkdir /var/www/html/ && chmod -R a+rwx /var/www/html/
-COPY content /var/www/html/
 VOLUME ["/var/www/html"]
+RUN ls -la /var/www/html/ && chmod -R a+rwx /var/www/html/
+
 
 #Expose the port
 EXPOSE 8080
